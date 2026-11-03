@@ -1,0 +1,30 @@
+# =====================================================================
+# Cấu hình OCR Pipeline - Vietnamese Document AI
+# =====================================================================
+
+# --- Thiết bị phần cứng ---
+device: "cuda"  # 'cuda' hoặc 'cpu' (tự động fallback sang 'cpu' nếu không có GPU)
+
+# --- Đường dẫn Dữ liệu & Kết quả ---
+dataset:
+  raw_dir: "E:/SGOD/test"               # Thư mục chứa tài liệu gốc (PDF hoặc ảnh)
+  output_dir: "results/ocr_output"   # Thư mục lưu kết quả JSON OCR
+  dpi: 200                          # DPI khi render PDF sang ảnh (200 - 300)
+
+# --- Mô hình phát hiện từ/chữ (YOLO Word Detection) ---
+detector:
+  model_path: "module/OCR/weights/best_yolo_ep100.pt" # Đường dẫn weights YOLO (.pt)
+  conf_thres: 0.25                  # Ngưỡng tin cậy (Confidence threshold)
+  iou_thres: 0.45                   # Ngưỡng IoU lọc trùng (NMS)
+  imgsz: 1024                       # Kích thước ảnh infer (1024 cho tài liệu)
+
+# --- Mô hình nhận diện chữ (VietOCR) ---
+recognizer:
+  config_base: "vgg_transformer"   # Kiến trúc: 'vgg_transformer' hoặc 'vgg_seq2seq'
+  weight_path: "module/OCR/weights/vgg_transformer_best.pth" # Weights VietOCR (.pth)
+  beamsearch: false                 # True: chính xác hơn nhưng chậm hơn
+
+# --- Hậu xử lý thứ tự đọc (Box Sorter) ---
+sorting:
+  y_threshold_ratio: 0.5            # Tỷ lệ chênh lệch tâm Y để gom các từ vào cùng dòng
+  line_break: true                  # Chèn ngắt dòng '\n' giữa các dòng văn bản

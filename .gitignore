@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Env
+.vscode/
+vsgod/
+.venv/
+data/
+data
+
+# Output
+*.log
+*.pt
+*.pth
+*.onnx
+*.json
+*.safetensors
+*.bin
+*.jinja
+#checkpoints/
+#output/
+#experiments/
+
+
+# IDE
+.idea/
+
+.output
